@@ -1,0 +1,33 @@
+language: java
+sudo: false
+jdk:
+- oraclejdk9
+env:
+  global:
+  - secure: EpBw2ryh9maBulRUaEKeNZh+z77gtud9OUEk8yQa9Mz4qFPFPGjcq8Q5RiAXOzW02nnBgKOLucX4M+Ku2TkFFGm7frNwRxHUKdp9xOAtHjrpkMp6FaT3ijLzrUfO44ePXwPsEJ6f32vZDBAJcxZHEncIGVZh9gaTv8LanvyNNEYr5r7kAIGX9B0LFAqWXIGdDXXeCWwMYmkAq8HQLT5KqBnloDn7x8/i+g1IgU+uNHXjcbQk4W2ECYRxCW6uy+wCK8SQsL96j5Vk3c7Pe8LoZx7JNzJ9QYAXaoL/6OsqtJas3MSNUMkqIFOfotnKj2nsKXV4KcEK8vAXVtIds/g3YkGW7zEIjFgwDMmeZXWv38QjuqjprIrw4E3/ChMdmGC6IIDabLPYySJ3Z5yrs2PYG/2DmoYWB52mg/q2Ak3WVU3NUogoG5gmjfjFrEC8OR2jBk3Y/zt9ddskyE4OTAx2+7VxigA0f2wBmhrKfcVYH6zudcx//BZnzjK86vCSaHAdIWyQazYGDRkq+XyMTbcsByPWT+ggsXReIDMk9z8Tfo2vmqD/ODAL/Ja6F3DzNI21PHhHR7jdNlXEDFWBkEU38jIXpkFwtby8OBQiW60Z/Zz44r2Fd5kHDLDUw6L1OcW2OLJPk897XJsDsQM/XsXJip4eDE862f/mgFUBtLXGo+Y= # CODACY_PROJECT_TOKEN
+  - secure: dVsKysY0+/fk2AaJF2ysMtZ7+ovFVQDll1Qu6/23tstSk5BpTOtVqVtkFcmyMc+ZP/FPFlAW2zjjmqSYHUhSTXb4N5fgeNehwfyw6NAZItU+imIcbACrkw2A62MYThTG50cg7GDfNvG+MZ0Hnv34H14cFRG516hGqZkTne3zl99HIS22/UO8fRrJNWWPFqpsiTJLogcT7zrJwnAuFmY6q8y/6DJn+qF78kQ+CQH0F1O+4UlMo8QJPHgNueZzyyU9eqehT8WeSVkfpq5BrFmBJIzuWT3GOaJFw2fKQ7U4MvZ/yuTUBdn38n3lGEmVLzNtWkthPUkyj36VvjJn7Aqla2BKCU2WRS4lqDXRBfYhtalDJo9bK34diyn0e0FQy4j2NZ1bbdxZC4FutMsUFZaDsU8g0ApIfLQG4AGJFulCyWLPhcb9xXO0UWDbXjMNggMeHZZyuXkAtSlPiV/nGOn2EgXSgD7PISYqkESWaPkJiB24IqOxUhdUAfeL7SdQkMRCSYxwj6BmjLZR5xtuNDYrEvruakxI+2Scv1RV3SdqDzMfq3zhY5k3cKZoNioA3PPWN0xsvnuijuG6yRar5SLvwHYXqB8rDq8HVstr8kMNYbU4dSW8lf9FdpLnZnWy4G5roj9Emre8pW2WFxRIT8I+3Uva2h7VshY/ANL22e4D6uU= # MAVEN_GPG_PASSPHRASE
+  - secure: UvXV4iYvTKPr+wJne/D4xDwnoYawMkejnnmKX8GAXpk0KuhmvjcZWryyKycmah6ZwC4Ik0QU1Ba1NbcwiMAnel1340G32rWsDaQARqQX+TSNROE6xKyt9H5zTTy6OxVVBKBzZh+wU3KcgAptfRyiim7ZSHDdLtHG4+awYu7giCD6Ffx1JLTZa1o+s6n8FZeQs91U4RYx6fdmrt+lse2xTkqqMNktBelZB2KgqOBx7LoVuU6fwOQha8+KVwUckxZI8+Wc13KUZQ/oPsydM8goQafv1OaMBUl0e2h2yCr0dOuq3AFaqM65c/nQYiv0zvR2joWXdf7xvi6y8zdGnwMExP+7lY1s+YlilyXOKxKaZiHSdOm9ARwoQuOirUHS52iJnJSBuhtQUqzwU6pN0/AxDOgAJx1TEkNFqeOZPpFviL0cf6477IoXCgYtNgzHniScF02L0ogukQnD8ov6CVUOoUxaFC1zUTjC8nfy4iY6ytw/wd7tQmUgYK0FzjQNeVOUfEDaRHiQKzPvudxMNgqwkUAvmrwQHxKaIKKtTlr827cshqq2s7aaWRIcdkNfslJl8BxzSiiEvFwYtAqnpNudXfQWfhJ2yK/YBJxaRz9oLHqLjSQ4t/pRN3xGOQujAuA/+YBVzf2vfp1H2ljPFBuwuO/auwHNvfkCoJ38wjE37KU= # MAVEN_OSSRH_USERNAME
+  - secure: WQxaGSEtSBoMoCw/g08un19WxkcosDdTo86yXC/SJx5dQO4niCOb1oxgbB84Rd2iCYCws7ku5zFPNsSpdLD3PaYs4YisKW2sPM6rD6hYze3fmnjKXrot2b0c2IG/IWk1XZMWoMGEbaGCJ87Hei9CxhtSSlFAm74A57O9KbXnYiUXqRK2FaVAj1CFke20JrD5y3k0e2zYnRruQbPWRQf8Tf7ZRtvkiDQXM9oqRaW98Q3a7JriN1dESh5gxC9zgu84BtHlTLGdxOvYXP9Db9P4kj7ad3Qcm5e8udm5n4qgSh59K7Ri063s12Fv1J12O+70ITyEaed6CQA1GClCT6ndV4i/CsSaHnTWdj3iPK5iQ2+kiXdD1HrGm35zSIVycweoEHPgP91wqrQR0PHMK5FCwgUKoUCgCG3Nr71jX0scJ2eQEVQSrCUvCirzJBtW6+Av/NRPv3zjk9Il6iyDWDYk7TB++2cEb5Pb35628l4zv+3drXcrKqtcGxCdgILrq5ilN/L4ZMc08rjP1f52luWPBv3+TCt61wq7POMckoRhpBLpRTRMVo2kMNc7iTKQ1ckxZgs27UZEnLt05MIbdIM7ttpKO9bdN1IEsavMime4aenINimS+qRNiA8kS8DdyaJbkMLmFNrX+oWZ5hg7JbWsHey/8oYs5akH1yv0EPXnCTA= # MAVEN_OSSRH_PASSWORD
+install:
+- mvn source:help javadoc:help dependency:go-offline -Pdependency-check,coverage,release
+before_script:
+- mvn --update-snapshots dependency-check:check -Pdependency-check
+script:
+- mvn clean test jacoco:report verify -Pcoverage
+after_success:
+- jdk_switcher use oraclejdk8
+- curl -o ~/codacy-coverage-reporter-assembly-latest.jar https://oss.sonatype.org/service/local/repositories/releases/content/com/codacy/codacy-coverage-reporter/2.0.1/codacy-coverage-reporter-2.0.1-assembly.jar
+- $JAVA_HOME/bin/java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r target/site/jacoco/jacoco.xml
+cache:
+  directories:
+  - $HOME/.m2
+before_deploy:
+- jdk_switcher use oraclejdk9
+- "if ! gpg --list-secret-keys 34C80F11; then gpg --import 34C80F11.gpg; fi"
+deploy:
+- provider: script # RELEASES
+  script: mvn clean versions:set -DnewVersion=${TRAVIS_TAG} deploy -DskipTests -Prelease --settings settings.xml
+  skip_cleanup: true
+  on:
+    repo: cryptomator/webdav-nio-adapter-servlet
+    tags: true
