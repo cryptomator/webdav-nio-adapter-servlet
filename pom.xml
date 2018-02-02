@@ -4,6 +4,8 @@
 	<groupId>org.cryptomator</groupId>
 	<artifactId>webdav-nio-adapter-servlet</artifactId>
 	<version>1.0.0</version>
+	<name>WebDAV-NIO Adapter Servlet</name>
+	<description>Servlet serving NIO directory contents as WebDAV resources.</description>
 	<url>https://github.com/cryptomator/webdav-nio-adapter-servlet</url>
 
 	<scm>
