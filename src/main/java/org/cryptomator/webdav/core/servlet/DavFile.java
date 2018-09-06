@@ -18,6 +18,8 @@ import org.apache.jackrabbit.webdav.property.DavProperty;
 import org.apache.jackrabbit.webdav.property.DavPropertyName;
 import org.apache.jackrabbit.webdav.property.DavPropertySet;
 import org.apache.jackrabbit.webdav.property.DefaultDavProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,6 +29,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Optional;
 
 class DavFile extends DavNode {
+
+	public static final Logger LOG = LoggerFactory.getLogger(DavFile.class);
 
 	protected static final String CONTENT_TYPE_VALUE = "application/octet-stream";
 	protected static final String CONTENT_DISPOSITION_HEADER = "Content-Disposition";
@@ -127,7 +131,15 @@ class DavFile extends DavNode {
 	}
 
 	private Optional<DavProperty<?>> sizeProperty() {
-		return attr.map(a -> new DefaultDavProperty<Long>(DavPropertyName.GETCONTENTLENGTH, a.size()));
+		return attr.map(a -> {
+			try {
+				return new DefaultDavProperty<Long>(DavPropertyName.GETCONTENTLENGTH, a.size());
+			} catch (IllegalArgumentException e) {
+				LOG.info("Exception thrown while requesting file size of {}. Invalid file header?", path.toString());
+				LOG.info("Exception was:", e);
+				return new DefaultDavProperty<Long>(DavPropertyName.GETCONTENTLENGTH, 0L);
+			}
+		});
 	}
 
 	@Override
