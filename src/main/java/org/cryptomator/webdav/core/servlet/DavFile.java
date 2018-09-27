@@ -8,7 +8,11 @@
  *******************************************************************************/
 package org.cryptomator.webdav.core.servlet;
 
-import org.apache.jackrabbit.webdav.*;
+import org.apache.jackrabbit.webdav.DavException;
+import org.apache.jackrabbit.webdav.DavResource;
+import org.apache.jackrabbit.webdav.DavResourceIterator;
+import org.apache.jackrabbit.webdav.DavServletResponse;
+import org.apache.jackrabbit.webdav.DavSession;
 import org.apache.jackrabbit.webdav.io.InputContext;
 import org.apache.jackrabbit.webdav.io.OutputContext;
 import org.apache.jackrabbit.webdav.lock.ActiveLock;
@@ -132,12 +136,12 @@ class DavFile extends DavNode {
 
 	private Optional<DavProperty<?>> sizeProperty() {
 		return attr.map(a -> {
-			try {
-				return new DefaultDavProperty<Long>(DavPropertyName.GETCONTENTLENGTH, a.size());
-			} catch (IllegalArgumentException e) {
-				LOG.info("Exception thrown while requesting file size of {}. Invalid file header?", path.toString());
-				LOG.info("Exception was:", e);
+			if (a.size() == -1) {
+				LOG.info("Requested file size of {} is negative. Invalid file header? Setting displayed file size to zero.", path.toString());
 				return new DefaultDavProperty<Long>(DavPropertyName.GETCONTENTLENGTH, 0L);
+
+			} else {
+				return new DefaultDavProperty<Long>(DavPropertyName.GETCONTENTLENGTH, a.size());
 			}
 		});
 	}
