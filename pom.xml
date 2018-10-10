@@ -17,7 +17,7 @@
 	<properties>
 		<servlet.version>3.1.0</servlet.version>
 		<jackrabbit.version>2.17.0</jackrabbit.version>
-		<guava.version>25.0-jre</guava.version>
+		<guava.version>26.0-jre</guava.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -39,6 +39,14 @@
 			<organizationUrl>http://cryptomator.org</organizationUrl>
 		</developer>
 	</developers>
+
+	<repositories>
+		<repository>
+			<id>bintray</id>
+			<name>bintray</name>
+			<url>http://jcenter.bintray.com</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<!-- Jackrabbit -->
@@ -112,7 +120,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<version>3.8.0</version>
 				<configuration>
 					<release>8</release>
 					<source>1.8</source>
@@ -131,7 +139,7 @@
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>3.0.2</version>
+						<version>3.3.2</version>
 						<configuration>
 							<cveValidForHours>24</cveValidForHours>
 							<failBuildOnCVSS>6</failBuildOnCVSS>
@@ -155,7 +163,7 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.7.9</version>
+						<version>0.8.2</version>
 						<executions>
 							<execution>
 								<id>prepare-agent</id>
@@ -172,13 +180,9 @@
 		<profile>
 			<id>release</id>
 			<distributionManagement>
-				<snapshotRepository>
-					<id>ossrh</id>
-					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-				</snapshotRepository>
 				<repository>
-					<id>ossrh</id>
-					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+					<id>bintray-jcenter</id>
+					<url>https://api.bintray.com/maven/cryptomator/maven/webdav-nio-adapter-servlet/;publish=1</url>
 				</repository>
 			</distributionManagement>
 			<build>
@@ -197,7 +201,7 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.0.0</version>
+						<version>3.0.1</version>
 						<executions>
 							<execution>
 								<id>attach-javadocs</id>
@@ -206,30 +210,6 @@
 								</goals>
 							</execution>
 						</executions>
-					</plugin>
-					<plugin>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.6</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.8</version>
-						<extensions>true</extensions>
-						<configuration>
-							<serverId>ossrh</serverId>
-							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-							<autoReleaseAfterClose>true</autoReleaseAfterClose>
-						</configuration>
 					</plugin>
 				</plugins>
 			</build>
