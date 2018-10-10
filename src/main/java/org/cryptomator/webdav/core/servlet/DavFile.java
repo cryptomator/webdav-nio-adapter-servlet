@@ -18,6 +18,8 @@ import org.apache.jackrabbit.webdav.property.DavProperty;
 import org.apache.jackrabbit.webdav.property.DavPropertyName;
 import org.apache.jackrabbit.webdav.property.DavPropertySet;
 import org.apache.jackrabbit.webdav.property.DefaultDavProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,6 +29,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Optional;
 
 class DavFile extends DavNode {
+
+	public static final Logger LOG = LoggerFactory.getLogger(DavFile.class);
 
 	protected static final String CONTENT_TYPE_VALUE = "application/octet-stream";
 	protected static final String CONTENT_DISPOSITION_HEADER = "Content-Disposition";
