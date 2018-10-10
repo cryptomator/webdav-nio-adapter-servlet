@@ -131,15 +131,7 @@ class DavFile extends DavNode {
 	}
 
 	private Optional<DavProperty<?>> sizeProperty() {
-		return attr.map(a -> {
-			try {
-				return new DefaultDavProperty<Long>(DavPropertyName.GETCONTENTLENGTH, a.size());
-			} catch (IllegalArgumentException e) {
-				LOG.info("Exception thrown while requesting file size of {}. Invalid file header?", path.toString());
-				LOG.info("Exception was:", e);
-				return new DefaultDavProperty<Long>(DavPropertyName.GETCONTENTLENGTH, 0L);
-			}
-		});
+		return attr.map(a -> new DefaultDavProperty<Long>(DavPropertyName.GETCONTENTLENGTH, a.size()));
 	}
 
 	@Override
