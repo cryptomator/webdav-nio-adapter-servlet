@@ -5,7 +5,7 @@ jdk:
 env:
   global:
   - secure: "EpBw2ryh9maBulRUaEKeNZh+z77gtud9OUEk8yQa9Mz4qFPFPGjcq8Q5RiAXOzW02nnBgKOLucX4M+Ku2TkFFGm7frNwRxHUKdp9xOAtHjrpkMp6FaT3ijLzrUfO44ePXwPsEJ6f32vZDBAJcxZHEncIGVZh9gaTv8LanvyNNEYr5r7kAIGX9B0LFAqWXIGdDXXeCWwMYmkAq8HQLT5KqBnloDn7x8/i+g1IgU+uNHXjcbQk4W2ECYRxCW6uy+wCK8SQsL96j5Vk3c7Pe8LoZx7JNzJ9QYAXaoL/6OsqtJas3MSNUMkqIFOfotnKj2nsKXV4KcEK8vAXVtIds/g3YkGW7zEIjFgwDMmeZXWv38QjuqjprIrw4E3/ChMdmGC6IIDabLPYySJ3Z5yrs2PYG/2DmoYWB52mg/q2Ak3WVU3NUogoG5gmjfjFrEC8OR2jBk3Y/zt9ddskyE4OTAx2+7VxigA0f2wBmhrKfcVYH6zudcx//BZnzjK86vCSaHAdIWyQazYGDRkq+XyMTbcsByPWT+ggsXReIDMk9z8Tfo2vmqD/ODAL/Ja6F3DzNI21PHhHR7jdNlXEDFWBkEU38jIXpkFwtby8OBQiW60Z/Zz44r2Fd5kHDLDUw6L1OcW2OLJPk897XJsDsQM/XsXJip4eDE862f/mgFUBtLXGo+Y=" # CODACY_PROJECT_TOKEN
-  - secure: "nRdxtxIBlxH/z05U56wQZLpsM9MQKw7EeDgZ6ewbm6VGAQ9JUGApOAePkUqPU9l7b7WR/jHyD8wGwXySyGasoSZIJJ42HzELGg0Ac19Op/78OJZZaDlkW4yvgtWbbggd4WhyQmPRyfi/X+Qh+/AixPzRGKqEtYGS1Fw7lS99rVwpVxktmtcb1gC/2i1N7q7xlYwGUut2MsIsI2cBXjFBIiyoZp5ZK5PHu+eerceTFzfW/Zz63CeRFQjgVFNHgG4qWaTxiVUxebOeNbBL9GzG68ZREtTjE0CuawW6SkwqQWr+wD+zrpN+MzUwBwB4v3KzleqAI6vOFUhrF6mUOH85yBQOTrPPogZX50nFRfBJ9iczJZUOnOzT2Tc/30jb7J85zKAzPd988Osi7KPy2GJ/6ejLUo4vl8yUIFi4dfAknLWdqzJXlzThvpAmlqItbOKEwr6Rl2kPx/39YBQBQKArxyYr9unyZn8qyH+TqrwClmLE2gqPB8t2rEb7yYnRHeQSBzk5Xwd3gtLfOkg3ck+5W+jSoPBxWBHmHve3jFWjnkv3UnA7CTV9cig77rZXjY81gQaJgjkdFUSNhufrGLeuO2au14M5aI1ENv9iqGDXKz9zirSZQ+wuLiJLOonHxUIwg/wZ8UJjw5G6n/q1pMJmLXFPL+xEKIskim0HCX4tDwQ=" # BINTRAY_API_KEY
+  - secure: "JlDUX/cfToM3OubNMKDUuIFhf1EdSnnkF0UydaJ+a7nMAGEp54v5rhCOCGCqeVwJamiU0zRm6UATPnO4sPzpRxnIN71hR/YHIY/Ix+JNdXROewor9Ig3fp4i+sGEebc6kS2a6zxXkZ9TmC2H1fVoMWGyqZhqSfpgDqKjQBmVR9hZWhC5BeGluf9UKdDGMSm4Un4RxPYMQdwFo6AsIv7sp5bKI5ced3IXsxs9DzmovF0cdfuG2+pbN0MsPYmfTavRUtMw3uGRXK5UL9Tyv/Sg5meKHh18MeLFp2znM+xvHoJFEJ412FI9BjXcno1+MA76L3KMRd7mwac8qvvAQpT0i8rA82l+EASKjzJ/pqgJPuWLaR6xDP5XjcBz4D9Wxdg9LhLUE/cuK1JCO3llo4srB0dckCbGC8WAZl54Fkn8f/1Xz40lw5WistB4v80VpuOimyqigyyMPsXyvWb7ESpvRS2D8bXcT2TElAowujZCR0m8R+lZ1gXvy856crPRkoNdpUxPBzwXZQ5W0PP3X4M1cpJEy2MJsALvF4xcAz5/5sdVuwGL6z3t4PK6gOjCrtz4xrlgHctJpa3JydTyD71DsI1x+8xQ1SWul36AakyThBYFCF4buhqePZch569nCKtGV7DDKevAN5x+q4kmZ1JTN9fQLOVjmUaQx52CABMpMYI=" # BINTRAY_API_KEY
 install:
 - curl -o $HOME/.m2/settings.xml https://gist.githubusercontent.com/cryptobot/cf5fbd909c4782aaeeeb7c7f4a1a43da/raw/e60ee486e34ee0c79f89f947abe2c83b4290c6bb/settings.xml
 - mvn source:help javadoc:help dependency:go-offline -Pdependency-check,coverage,release
@@ -27,4 +27,4 @@ deploy:
     repo: cryptomator/webdav-nio-adapter-servlet
     tags: true
 after_deploy:
-  - "echo '{\"close\": \"1\"}' | curl -v -X POST -u cryptobot:${BINTRAY_API_KEY} https://api.bintray.com/maven_central_sync/cryptomator/maven/webdav-nio-adapter-servlet/versions/${TRAVIS_TAG}"
+  - "echo '{\"close\": \"1\"}' | curl -X POST -u cryptobot:${BINTRAY_API_KEY} https://api.bintray.com/maven_central_sync/cryptomator/maven/webdav-nio-adapter-servlet/versions/${TRAVIS_TAG}"
