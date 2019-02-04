@@ -95,14 +95,16 @@ class DavFolder extends DavNode {
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
 			List<DavResource> children = new ArrayList<>();
 			for (Path childPath : stream) {
-				BasicFileAttributes childAttr = Files.readAttributes(childPath, BasicFileAttributes.class);
+				BasicFileAttributes childAttr = Files.readAttributes(childPath, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
 				DavLocatorImpl childLocator = locator.resolveChild(childPath.getFileName().toString());
 				if (childAttr.isDirectory()) {
 					DavFolder childFolder = factory.createFolder(childLocator, childPath, Optional.of(childAttr), session);
 					children.add(childFolder);
-				} else {
+				} else if (childAttr.isRegularFile()) {
 					DavFile childFile = factory.createFile(childLocator, childPath, Optional.of(childAttr), session);
 					children.add(childFile);
+				} else {
+					LOG.warn("encountered unsupported node: {}", childPath);
 				}
 			}
 			return new DavResourceIteratorImpl(children);
