@@ -14,6 +14,7 @@ import org.apache.jackrabbit.webdav.lock.LockManager;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -58,9 +59,11 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 		assert locator.equals(request.getRequestLocator());
 		Path p = resolveUrl(locator.getResourcePath());
 		Optional<BasicFileAttributes> attr = readBasicFileAttributes(p);
-		if (!attr.isPresent() && DavMethods.METHOD_PUT.equals(request.getMethod())) {
+		if (DavMethods.METHOD_PUT.equals(request.getMethod())) {
+			assertNonExisting(p, attr);
 			return createFile(locator, p, Optional.empty(), request.getDavSession());
-		} else if (!attr.isPresent() && DavMethods.METHOD_MKCOL.equals(request.getMethod())) {
+		} else if (DavMethods.METHOD_MKCOL.equals(request.getMethod())) {
+			assertNonExisting(p, attr);
 			return createFolder(locator, p, Optional.empty(), request.getDavSession());
 		} else if (!attr.isPresent() && DavMethods.METHOD_LOCK.equals(request.getMethod())) {
 			// locking non-existing resources must create a non-collection resource:
@@ -71,10 +74,18 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 			throw new DavException(DavServletResponse.SC_NOT_FOUND);
 		} else if (attr.get().isDirectory()) {
 			return createFolder(locator, p, attr, request.getDavSession());
-		} else if (DavMethods.METHOD_GET.equals(request.getMethod()) && request.getHeader(RANGE_HEADER) != null) {
+		} else if (attr.get().isRegularFile() && DavMethods.METHOD_GET.equals(request.getMethod()) && request.getHeader(RANGE_HEADER) != null) {
 			return createFileRange(locator, p, attr.get(), request.getDavSession(), request, response);
-		} else {
+		} else if (attr.get().isRegularFile()) {
 			return createFile(locator, p, attr, request.getDavSession());
+		} else {
+			throw new DavException(DavServletResponse.SC_NOT_FOUND, "Node not a file or directory: " + p);
+		}
+	}
+
+	private void assertNonExisting(Path p, Optional<BasicFileAttributes> attr) throws DavException {
+		if (attr.isPresent()) {
+			throw new DavException(DavServletResponse.SC_CONFLICT, p + " already exists.");
 		}
 	}
 
@@ -121,7 +132,7 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 	 */
 	private Optional<BasicFileAttributes> readBasicFileAttributes(Path path) throws DavException {
 		try {
-			return Optional.of(Files.readAttributes(path, BasicFileAttributes.class));
+			return Optional.of(Files.readAttributes(path, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS));
 		} catch (NoSuchFileException e) {
 			return Optional.empty();
 		} catch (IOException e) {
