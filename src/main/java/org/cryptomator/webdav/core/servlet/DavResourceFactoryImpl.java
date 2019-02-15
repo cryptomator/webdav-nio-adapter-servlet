@@ -60,10 +60,10 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 		Path p = resolveUrl(locator.getResourcePath());
 		Optional<BasicFileAttributes> attr = readBasicFileAttributes(p);
 		if (DavMethods.METHOD_PUT.equals(request.getMethod())) {
-			assertNonExisting(p, attr);
+			checkPreconditionsForPut(p, attr);
 			return createFile(locator, p, Optional.empty(), request.getDavSession());
 		} else if (DavMethods.METHOD_MKCOL.equals(request.getMethod())) {
-			assertNonExisting(p, attr);
+			checkPreconditionsForMkcol(p, attr);
 			return createFolder(locator, p, Optional.empty(), request.getDavSession());
 		} else if (!attr.isPresent() && DavMethods.METHOD_LOCK.equals(request.getMethod())) {
 			// locking non-existing resources must create a non-collection resource:
@@ -83,9 +83,16 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 		}
 	}
 
-	private void assertNonExisting(Path p, Optional<BasicFileAttributes> attr) throws DavException {
-		if (attr.isPresent()) {
+	private void checkPreconditionsForPut(Path p, Optional<BasicFileAttributes> attr) throws DavException {
+		if (attr.isPresent() && !attr.get().isRegularFile()) {
 			throw new DavException(DavServletResponse.SC_CONFLICT, p + " already exists.");
+		}
+	}
+
+	private void checkPreconditionsForMkcol(Path p, Optional<BasicFileAttributes> attr) throws DavException {
+		if (attr.isPresent()) {
+			// status code 405 required by https://tools.ietf.org/html/rfc2518#section-8.3.2
+			throw new DavException(DavServletResponse.SC_METHOD_NOT_ALLOWED, p + " already exists.");
 		}
 	}
 
