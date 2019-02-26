@@ -23,11 +23,11 @@ public class LoggingFilter implements HttpFilter {
 
 	@Override
 	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-		if (LOG.isInfoEnabled()) {
+		if (LOG.isDebugEnabled()) {
 			long requestId = REQUEST_ID_GEN.getAndIncrement();
-			LOG.info("REQUEST {}:\n{} {} {}\n{}", requestId, request.getMethod(), request.getRequestURI(), request.getProtocol(), headers(request));
+			LOG.debug("REQUEST {}:\n{} {} {}\n{}", requestId, request.getMethod(), request.getRequestURI(), request.getProtocol(), headers(request));
 			chain.doFilter(request, response);
-			LOG.info("RESPONSE {}:\n{}\n{}", requestId, response.getStatus(), headers(response));
+			LOG.debug("RESPONSE {}:\n{}\n{}", requestId, response.getStatus(), headers(response));
 		} else {
 			chain.doFilter(request, response);
 		}
