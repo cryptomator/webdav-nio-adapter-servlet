@@ -91,7 +91,6 @@ class DavFolder extends DavNode {
 
 	@Override
 	public DavResourceIterator getMembers() {
-		LOG.info("get members of {}", path);
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
 			List<DavResource> children = new ArrayList<>();
 			for (Path childPath : stream) {
