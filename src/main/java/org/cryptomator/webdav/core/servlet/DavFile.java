@@ -91,7 +91,7 @@ class DavFile extends DavNode {
 				Files.move(path, dst.path, StandardCopyOption.REPLACE_EXISTING);
 			} catch (FileSystemException e) {
 				String reason = Strings.nullToEmpty(e.getReason());
-				if (reason.contains("path too long") || reason.contains("name too long")) {
+				if (reason.contains("too long")) {
 					// Status code 414 not applictable for things other than request uris.
 					// If Destination header is too long, return status code 400:
 					// https://tools.ietf.org/html/rfc4918#section-10.3
@@ -119,7 +119,7 @@ class DavFile extends DavNode {
 				Files.copy(path, dst.path, StandardCopyOption.REPLACE_EXISTING);
 			} catch (FileSystemException e) {
 				String reason = Strings.nullToEmpty(e.getReason());
-				if (reason.contains("path too long") || reason.contains("name too long")) {
+				if (reason.contains("path too long")) {
 					// Status code 414 not applictable for things other than request uris.
 					// If Destination header is too long, return status code 400:
 					// https://tools.ietf.org/html/rfc4918#section-10.3

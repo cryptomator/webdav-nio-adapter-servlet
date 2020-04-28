@@ -78,7 +78,7 @@ class DavFolder extends DavNode {
 			Files.createDirectory(memberFolder.path);
 		} catch (FileSystemException e) {
 			String reason = Strings.nullToEmpty(e.getReason());
-			if (reason.contains("path too long") || reason.contains("name too long")) {
+			if (reason.contains("path too long")) {
 				throw new DavException(DavServletResponse.SC_REQUEST_URI_TOO_LONG);
 			} else {
 				throw new UncheckedIOException(e);
@@ -94,7 +94,7 @@ class DavFolder extends DavNode {
 			ByteStreams.copy(src, dst);
 		} catch (FileSystemException e) {
 			String reason = Strings.nullToEmpty(e.getReason());
-			if (reason.contains("path too long") || reason.contains("name too long")) {
+			if (reason.contains("path too long")) {
 				throw new DavException(DavServletResponse.SC_REQUEST_URI_TOO_LONG);
 			} else {
 				throw new UncheckedIOException(e);
@@ -165,7 +165,7 @@ class DavFolder extends DavNode {
 				Files.move(path, destination.path, StandardCopyOption.REPLACE_EXISTING);
 			} catch (FileSystemException e) {
 				String reason = Strings.nullToEmpty(e.getReason());
-				if (reason.contains("path too long") || reason.contains("name too long")) {
+				if (reason.contains("path too long")) {
 					// Status code 414 not applictable for things other than request uris.
 					// If Destination header is too long, return status code 400:
 					// https://tools.ietf.org/html/rfc4918#section-10.3
@@ -213,7 +213,7 @@ class DavFolder extends DavNode {
 			}
 		} catch (FileSystemException e) {
 			String reason = Strings.nullToEmpty(e.getReason());
-			if (reason.contains("path too long") || reason.contains("name too long")) {
+			if (reason.contains("path too long")) {
 				// Status code 414 not applictable for things other than request uris.
 				// If Destination header is too long, return status code 400:
 				// https://tools.ietf.org/html/rfc4918#section-10.3
