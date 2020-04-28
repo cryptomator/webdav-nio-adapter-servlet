@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.cryptomator.webdav.core.servlet;
 
+import com.google.common.base.Strings;
 import org.apache.jackrabbit.webdav.*;
 import org.apache.jackrabbit.webdav.io.InputContext;
 import org.apache.jackrabbit.webdav.io.OutputContext;
@@ -22,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -86,6 +89,16 @@ class DavFile extends DavNode {
 			try {
 				// Overwrite header already checked by AbstractWebdavServlet#validateDestination
 				Files.move(path, dst.path, StandardCopyOption.REPLACE_EXISTING);
+			} catch (FileSystemException e) {
+				String reason = Strings.nullToEmpty(e.getReason());
+				if (reason.contains("too long")) {
+					// Status code 414 not applictable for things other than request uris.
+					// If Destination header is too long, return status code 400:
+					// https://tools.ietf.org/html/rfc4918#section-10.3
+					throw new DavException(DavServletResponse.SC_BAD_REQUEST);
+				} else {
+					throw new DavException(DavServletResponse.SC_INTERNAL_SERVER_ERROR, e);
+				}
 			} catch (IOException e) {
 				throw new DavException(DavServletResponse.SC_INTERNAL_SERVER_ERROR, e);
 			}
@@ -104,6 +117,16 @@ class DavFile extends DavNode {
 			try {
 				// Overwrite header already checked by AbstractWebdavServlet#validateDestination
 				Files.copy(path, dst.path, StandardCopyOption.REPLACE_EXISTING);
+			} catch (FileSystemException e) {
+				String reason = Strings.nullToEmpty(e.getReason());
+				if (reason.contains("path too long")) {
+					// Status code 414 not applictable for things other than request uris.
+					// If Destination header is too long, return status code 400:
+					// https://tools.ietf.org/html/rfc4918#section-10.3
+					throw new DavException(DavServletResponse.SC_BAD_REQUEST);
+				} else {
+					throw new DavException(DavServletResponse.SC_INTERNAL_SERVER_ERROR, e);
+				}
 			} catch (IOException e) {
 				throw new DavException(DavServletResponse.SC_INTERNAL_SERVER_ERROR, e);
 			}
