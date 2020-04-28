@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.cryptomator.webdav.core.servlet;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.MoreFiles;
@@ -72,18 +73,32 @@ class DavFolder extends DavNode {
 		}
 	}
 
-	private void addMemberFolder(DavFolder memberFolder) {
+	private void addMemberFolder(DavFolder memberFolder) throws DavException {
 		try {
 			Files.createDirectory(memberFolder.path);
+		} catch (FileSystemException e) {
+			String reason = Strings.nullToEmpty(e.getReason());
+			if (reason.contains("path too long") || reason.contains("name too long")) {
+				throw new DavException(DavServletResponse.SC_REQUEST_URI_TOO_LONG);
+			} else {
+				throw new UncheckedIOException(e);
+			}
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
 
-	private void addMemberFile(DavFile memberFile, InputStream inputStream) {
+	private void addMemberFile(DavFile memberFile, InputStream inputStream) throws DavException {
 		try (ReadableByteChannel src = Channels.newChannel(inputStream); //
 				WritableByteChannel dst = Files.newByteChannel(memberFile.path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)) {
 			ByteStreams.copy(src, dst);
+		} catch (FileSystemException e) {
+			String reason = Strings.nullToEmpty(e.getReason());
+			if (reason.contains("path too long") || reason.contains("name too long")) {
+				throw new DavException(DavServletResponse.SC_REQUEST_URI_TOO_LONG);
+			} else {
+				throw new UncheckedIOException(e);
+			}
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
@@ -148,6 +163,16 @@ class DavFolder extends DavNode {
 		if (Files.isDirectory(destination.path.getParent())) {
 			try {
 				Files.move(path, destination.path, StandardCopyOption.REPLACE_EXISTING);
+			} catch (FileSystemException e) {
+				String reason = Strings.nullToEmpty(e.getReason());
+				if (reason.contains("path too long") || reason.contains("name too long")) {
+					// Status code 414 not applictable for things other than request uris.
+					// If Destination header is too long, return status code 400:
+					// https://tools.ietf.org/html/rfc4918#section-10.3
+					throw new DavException(DavServletResponse.SC_BAD_REQUEST);
+				} else {
+					throw new DavException(DavServletResponse.SC_INTERNAL_SERVER_ERROR, e);
+				}
 			} catch (IOException e) {
 				throw new DavException(DavServletResponse.SC_INTERNAL_SERVER_ERROR, e);
 			}
@@ -185,6 +210,16 @@ class DavFolder extends DavNode {
 				}
 			} else {
 				Files.walkFileTree(path, new CopyingFileVisitor(path, destination.path, StandardCopyOption.REPLACE_EXISTING));
+			}
+		} catch (FileSystemException e) {
+			String reason = Strings.nullToEmpty(e.getReason());
+			if (reason.contains("path too long") || reason.contains("name too long")) {
+				// Status code 414 not applictable for things other than request uris.
+				// If Destination header is too long, return status code 400:
+				// https://tools.ietf.org/html/rfc4918#section-10.3
+				throw new DavException(DavServletResponse.SC_BAD_REQUEST);
+			} else {
+				throw new DavException(DavServletResponse.SC_INTERNAL_SERVER_ERROR, e);
 			}
 		} catch (IOException e) {
 			throw new DavException(DavServletResponse.SC_INTERNAL_SERVER_ERROR, e);
