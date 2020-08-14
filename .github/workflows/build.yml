@@ -13,7 +13,7 @@ jobs:
     env:
       BUILD_VERSION: SNAPSHOT
       # Name of the project; used in multiple steps (e.g. for upload)
-      PROJECT_NAME: <<Unset>>
+      PROJECT_NAME: webdav-nio-adapter-servlet
     steps:
       # Foreign Action: Checkout the current commit
       - uses: actions/checkout@v2
