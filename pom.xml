@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cryptomator</groupId>
 	<artifactId>webdav-nio-adapter-servlet</artifactId>
-	<version>1.0.7</version>
+	<version>1.0.8</version>
 	<name>WebDAV-NIO Adapter Servlet</name>
 	<description>Servlet serving NIO directory contents as WebDAV resources.</description>
 	<url>https://github.com/cryptomator/webdav-nio-adapter-servlet</url>
@@ -16,7 +16,7 @@
 
 	<properties>
 		<servlet.version>3.1.0</servlet.version>
-		<jackrabbit.version>2.21.0</jackrabbit.version>
+		<jackrabbit.version>2.21.3</jackrabbit.version>
 		<guava.version>29.0-jre</guava.version>
 		<slf4j.version>1.7.30</slf4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -104,7 +104,7 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>2.23.0</version>
+			<version>3.5.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
