@@ -13,4 +13,8 @@ target/
 .idea/**/tasks.xml
 .idea/dictionaries
 .idea/**/libraries/
+.idea/.name
+.idea/encodings.xml
+.idea/compiler.xml
+.idea/jarRepositories.xml
 *.iml
