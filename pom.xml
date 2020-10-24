@@ -17,7 +17,7 @@
 	<properties>
 		<servlet.version>3.1.0</servlet.version>
 		<jackrabbit.version>2.21.3</jackrabbit.version>
-		<guava.version>30.0-android</guava.version>
+		<guava.version>30.0-jre</guava.version>
 		<slf4j.version>1.7.30</slf4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
