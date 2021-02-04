@@ -242,7 +242,7 @@
 				<repository>
 					<id>github</id>
 					<name>GitHub Packages</name>
-					<url>https://maven.pkg.github.com/cryptomator/webdav-nio-adapter</url>
+					<url>https://maven.pkg.github.com/cryptomator/webdav-nio-adapter-servlet</url>
 				</repository>
 			</distributionManagement>
 		</profile>
