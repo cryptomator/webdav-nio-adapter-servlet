@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag'     
+        description: 'Tag'
         required: true
         default: '0.0.0'
 jobs:
