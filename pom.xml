@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- dependencies -->
-		<servlet.version>3.1.0</servlet.version>
+		<servlet.version>4.0.1</servlet.version>
 		<jackrabbit.version>2.21.5</jackrabbit.version>
 		<guava.version>30.0-jre</guava.version>
 		<slf4j.version>1.7.30</slf4j.version>
@@ -121,7 +121,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<release>8</release>
+					<release>11</release>
 					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>
