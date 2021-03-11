@@ -8,13 +8,13 @@
  *******************************************************************************/
 package org.cryptomator.webdav.core.filters;
 
-import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import org.cryptomator.webdav.core.filters.UnicodeResourcePathNormalizationFilter.MultistatusHrefNormalizer;
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
@@ -29,7 +29,6 @@ import java.text.Normalizer.Form;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-@RunWith(HierarchicalContextRunner.class)
 public class UnicodeResourcePathNormalizationFilterTest {
 
 	private UnicodeResourcePathNormalizationFilter filter;
@@ -37,7 +36,7 @@ public class UnicodeResourcePathNormalizationFilterTest {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		filter = new UnicodeResourcePathNormalizationFilter();
 		chain = Mockito.mock(FilterChain.class);
@@ -45,9 +44,10 @@ public class UnicodeResourcePathNormalizationFilterTest {
 		response = Mockito.mock(HttpServletResponse.class);
 	}
 
+	@Nested
 	public class NormalizedRequestTest {
 
-		@Before
+		@BeforeEach
 		public void setup() {
 			Mockito.when(request.getScheme()).thenReturn("http");
 			Mockito.when(request.getServerName()).thenReturn("example.com");
@@ -63,8 +63,8 @@ public class UnicodeResourcePathNormalizationFilterTest {
 			ArgumentCaptor<HttpServletRequest> wrappedReq = ArgumentCaptor.forClass(HttpServletRequest.class);
 			Mockito.verify(chain).doFilter(wrappedReq.capture(), Mockito.any(ServletResponse.class));
 			Mockito.verify(request, Mockito.never()).getPathInfo();
-			Assert.assertEquals("/foo/bar", wrappedReq.getValue().getRequestURI());
-			Assert.assertEquals("http://example.com/foo/bar", wrappedReq.getValue().getRequestURL().toString());
+			Assertions.assertEquals("/foo/bar", wrappedReq.getValue().getRequestURI());
+			Assertions.assertEquals("http://example.com/foo/bar", wrappedReq.getValue().getRequestURL().toString());
 		}
 
 		@Test
@@ -75,8 +75,8 @@ public class UnicodeResourcePathNormalizationFilterTest {
 			ArgumentCaptor<HttpServletRequest> wrappedReq = ArgumentCaptor.forClass(HttpServletRequest.class);
 			Mockito.verify(chain).doFilter(wrappedReq.capture(), Mockito.any(ServletResponse.class));
 			Mockito.verify(request, Mockito.never()).getPathInfo();
-			Assert.assertEquals("/foo/bar;foo", wrappedReq.getValue().getRequestURI());
-			Assert.assertEquals("http://example.com/foo/bar;foo", wrappedReq.getValue().getRequestURL().toString());
+			Assertions.assertEquals("/foo/bar;foo", wrappedReq.getValue().getRequestURI());
+			Assertions.assertEquals("http://example.com/foo/bar;foo", wrappedReq.getValue().getRequestURL().toString());
 		}
 
 		@Test
@@ -87,9 +87,9 @@ public class UnicodeResourcePathNormalizationFilterTest {
 			ArgumentCaptor<HttpServletRequest> wrappedReq = ArgumentCaptor.forClass(HttpServletRequest.class);
 			Mockito.verify(chain).doFilter(wrappedReq.capture(), Mockito.any(ServletResponse.class));
 			Mockito.verify(request, Mockito.never()).getPathInfo();
-			Assert.assertEquals("/\u00C5", wrappedReq.getValue().getPathInfo());
-			Assert.assertEquals("/foo/\u00C5", wrappedReq.getValue().getRequestURI());
-			Assert.assertEquals("http://example.com/foo/\u00C5", wrappedReq.getValue().getRequestURL().toString());
+			Assertions.assertEquals("/\u00C5", wrappedReq.getValue().getPathInfo());
+			Assertions.assertEquals("/foo/\u00C5", wrappedReq.getValue().getRequestURI());
+			Assertions.assertEquals("http://example.com/foo/\u00C5", wrappedReq.getValue().getRequestURL().toString());
 		}
 
 		@Test
@@ -99,7 +99,7 @@ public class UnicodeResourcePathNormalizationFilterTest {
 
 			ArgumentCaptor<HttpServletRequest> wrappedReq = ArgumentCaptor.forClass(HttpServletRequest.class);
 			Mockito.verify(chain).doFilter(wrappedReq.capture(), Mockito.any(ServletResponse.class));
-			Assert.assertEquals("http://example.com/foo/Ö", wrappedReq.getValue().getRequestURL().toString());
+			Assertions.assertEquals("http://example.com/foo/Ö", wrappedReq.getValue().getRequestURL().toString());
 		}
 
 		@Test
@@ -109,17 +109,18 @@ public class UnicodeResourcePathNormalizationFilterTest {
 
 			ArgumentCaptor<HttpServletRequest> wrappedReq = ArgumentCaptor.forClass(HttpServletRequest.class);
 			Mockito.verify(chain).doFilter(wrappedReq.capture(), Mockito.any(ServletResponse.class));
-			Assert.assertEquals("http://example.com/bar/\u00C5", wrappedReq.getValue().getHeader("Destination"));
+			Assertions.assertEquals("http://example.com/bar/\u00C5", wrappedReq.getValue().getHeader("Destination"));
 		}
 
 	}
 
+	@Nested
 	public class NormalizedResponseTest {
 
 		private ServletOutputStream out;
 		private HttpServletResponse res;
 
-		@Before
+		@BeforeEach
 		public void setup() throws IOException, ServletException {
 			out = Mockito.mock(ServletOutputStream.class);
 
@@ -137,11 +138,11 @@ public class UnicodeResourcePathNormalizationFilterTest {
 		@Test
 		public void testUnmodifiedNonMultistatusResponseBody() throws IOException {
 			res.setStatus(200);
-			Assert.assertSame(out, res.getOutputStream());
+			Assertions.assertSame(out, res.getOutputStream());
 		}
 
 		@Test
-		public void testNfdUrlsInMultistatusResponseBody() throws IOException, ServletException {
+		public void testNfdUrlsInMultistatusResponseBody() throws IOException {
 			ByteArrayOutputStream nfdBody = new ByteArrayOutputStream();
 			Mockito.doAnswer(invocation -> {
 				int b = invocation.getArgument(0);
@@ -154,11 +155,12 @@ public class UnicodeResourcePathNormalizationFilterTest {
 			res.setContentLength(nfcBody.length);
 			res.getOutputStream().write(nfcBody);
 
-			Assert.assertThat(new String(nfdBody.toByteArray(), UTF_8), CoreMatchers.containsString("<href>http://example.com/u%cc%88/</href>"));
+			MatcherAssert.assertThat(new String(nfdBody.toByteArray(), UTF_8), CoreMatchers.containsString("<href>http://example.com/u%cc%88/</href>"));
 		}
 
 	}
 
+	@Nested
 	public class MultistatusHrefNormalizerTest {
 
 		@Test
@@ -169,11 +171,11 @@ public class UnicodeResourcePathNormalizationFilterTest {
 				transformer.transform();
 			}
 			String transformed = new String(out.toByteArray(), UTF_8);
-			Assert.assertTrue(transformed.startsWith("<?xml"));
-			Assert.assertTrue(transformed.contains("<l:foo xmlns:l=\"LOL\">"));
-			Assert.assertTrue(transformed.contains("<l:bar>bar</l:bar>"));
-			Assert.assertTrue(transformed.contains("<l:href>http://example.com/ascii/</l:href>"));
-			Assert.assertTrue(transformed.endsWith("</l:foo>"));
+			Assertions.assertTrue(transformed.startsWith("<?xml"));
+			Assertions.assertTrue(transformed.contains("<l:foo xmlns:l=\"LOL\">"));
+			Assertions.assertTrue(transformed.contains("<l:bar>bar</l:bar>"));
+			Assertions.assertTrue(transformed.contains("<l:href>http://example.com/ascii/</l:href>"));
+			Assertions.assertTrue(transformed.endsWith("</l:foo>"));
 		}
 
 		@Test
@@ -184,8 +186,8 @@ public class UnicodeResourcePathNormalizationFilterTest {
 				transformer.transform();
 			}
 			String transformed = new String(out.toByteArray(), UTF_8);
-			Assert.assertTrue(transformed.contains("<text>\u00fc</text>"));
-			Assert.assertTrue(transformed.contains("<href>http://example.com/u%cc%88/</href>"));
+			Assertions.assertTrue(transformed.contains("<text>\u00fc</text>"));
+			Assertions.assertTrue(transformed.contains("<href>http://example.com/u%cc%88/</href>"));
 		}
 
 		@Test
@@ -196,8 +198,8 @@ public class UnicodeResourcePathNormalizationFilterTest {
 				transformer.transform();
 			}
 			String transformed = new String(out.toByteArray(), UTF_8);
-			Assert.assertTrue(transformed.contains("<text>u\u0308</text>"));
-			Assert.assertTrue(transformed.contains("<href>http://example.com/%c3%bc/</href>"));
+			Assertions.assertTrue(transformed.contains("<text>u\u0308</text>"));
+			Assertions.assertTrue(transformed.contains("<href>http://example.com/%c3%bc/</href>"));
 		}
 
 	}

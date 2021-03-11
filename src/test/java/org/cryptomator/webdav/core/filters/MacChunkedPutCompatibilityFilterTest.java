@@ -8,9 +8,9 @@
  *******************************************************************************/
 package org.cryptomator.webdav.core.filters;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
@@ -29,7 +29,7 @@ public class MacChunkedPutCompatibilityFilterTest {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		filter = new MacChunkedPutCompatibilityFilter();
 		chain = Mockito.mock(FilterChain.class);
@@ -44,7 +44,7 @@ public class MacChunkedPutCompatibilityFilterTest {
 
 		ArgumentCaptor<HttpServletRequest> wrappedReq = ArgumentCaptor.forClass(HttpServletRequest.class);
 		Mockito.verify(chain).doFilter(wrappedReq.capture(), Mockito.any(ServletResponse.class));
-		Assert.assertSame(request, wrappedReq.getValue());
+		Assertions.assertSame(request, wrappedReq.getValue());
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class MacChunkedPutCompatibilityFilterTest {
 
 		ArgumentCaptor<HttpServletRequest> wrappedReq = ArgumentCaptor.forClass(HttpServletRequest.class);
 		Mockito.verify(chain).doFilter(wrappedReq.capture(), Mockito.any(ServletResponse.class));
-		Assert.assertSame(request, wrappedReq.getValue());
+		Assertions.assertSame(request, wrappedReq.getValue());
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class MacChunkedPutCompatibilityFilterTest {
 
 		ArgumentCaptor<HttpServletRequest> wrappedReq = ArgumentCaptor.forClass(HttpServletRequest.class);
 		Mockito.verify(chain).doFilter(wrappedReq.capture(), Mockito.any(ServletResponse.class));
-		Assert.assertSame(request, wrappedReq.getValue());
+		Assertions.assertSame(request, wrappedReq.getValue());
 	}
 
 	@Test
@@ -98,32 +98,32 @@ public class MacChunkedPutCompatibilityFilterTest {
 		ServletInputStream wrappedIn = wrappedReq.getValue().getInputStream();
 
 		Mockito.when(in.isFinished()).thenReturn(false);
-		Assert.assertFalse(wrappedIn.isFinished());
+		Assertions.assertFalse(wrappedIn.isFinished());
 
 		Mockito.when(in.isReady()).thenReturn(true);
-		Assert.assertTrue(wrappedIn.isReady());
+		Assertions.assertTrue(wrappedIn.isReady());
 
 		Mockito.when(in.read()).thenReturn(0xFF);
-		Assert.assertEquals(0xFF, wrappedIn.read());
+		Assertions.assertEquals(0xFF, wrappedIn.read());
 
 		Mockito.when(in.available()).thenReturn(100);
-		Assert.assertEquals(4, wrappedIn.available());
+		Assertions.assertEquals(4, wrappedIn.available());
 
 		Mockito.when(in.skip(2)).thenReturn(2l);
-		Assert.assertEquals(2, wrappedIn.skip(2));
+		Assertions.assertEquals(2, wrappedIn.skip(2));
 
 		Mockito.when(in.read(Mockito.any(), Mockito.eq(0), Mockito.eq(100))).thenReturn(100);
 		Mockito.when(in.read(Mockito.any(), Mockito.eq(0), Mockito.eq(2))).thenReturn(2);
-		Assert.assertEquals(2, wrappedIn.read(new byte[100], 0, 100));
+		Assertions.assertEquals(2, wrappedIn.read(new byte[100], 0, 100));
 
 		Mockito.when(in.read()).thenReturn(0xFF);
-		Assert.assertEquals(-1, wrappedIn.read());
+		Assertions.assertEquals(-1, wrappedIn.read());
 
 		Mockito.when(in.isFinished()).thenReturn(false);
-		Assert.assertTrue(wrappedIn.isFinished());
+		Assertions.assertTrue(wrappedIn.isFinished());
 
 		Mockito.when(in.isReady()).thenReturn(true);
-		Assert.assertFalse(wrappedIn.isReady());
+		Assertions.assertFalse(wrappedIn.isReady());
 	}
 
 }

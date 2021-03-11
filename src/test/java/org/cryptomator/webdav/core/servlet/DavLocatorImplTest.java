@@ -8,9 +8,9 @@
  *******************************************************************************/
 package org.cryptomator.webdav.core.servlet;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class DavLocatorImplTest {
@@ -18,7 +18,7 @@ public class DavLocatorImplTest {
 	private DavLocatorFactoryImpl factory;
 	private DavLocatorImpl locator;
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		factory = Mockito.mock(DavLocatorFactoryImpl.class);
 		locator = new DavLocatorImpl(factory, "http://localhost/contextPath/", "foo/foo bar.txt");
@@ -27,22 +27,26 @@ public class DavLocatorImplTest {
 	@Test
 	public void testConstructionWithTrailingSlash() {
 		DavLocatorImpl locator = new DavLocatorImpl(factory, "http://localhost/contextPath/", "foo/bar/baz/");
-		Assert.assertEquals("foo/bar/baz", locator.getResourcePath());
+		Assertions.assertEquals("foo/bar/baz", locator.getResourcePath());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testConstructionWithInvalidPrefix() {
-		new DavLocatorImpl(factory, "http://localhost/contextPath", "foo/foo bar.txt");
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new DavLocatorImpl(factory, "http://localhost/contextPath", "foo/foo bar.txt");
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testConstructionWithInvalidPath() {
-		new DavLocatorImpl(factory, "http://localhost/contextPath/", "/foo/foo bar.txt");
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new DavLocatorImpl(factory, "http://localhost/contextPath/", "/foo/foo bar.txt");
+		});
 	}
 
 	@Test
 	public void testGetResourcePath() {
-		Assert.assertEquals("foo/foo bar.txt", locator.getResourcePath());
+		Assertions.assertEquals("foo/foo bar.txt", locator.getResourcePath());
 	}
 
 	@Test
@@ -51,7 +55,7 @@ public class DavLocatorImplTest {
 		DavLocatorImpl fooBar = new DavLocatorImpl(factory, "http://localhost/contextPath/", "foo/bar");
 		Mockito.when(factory.createResourceLocator("http://localhost/contextPath/", null, "foo/bar")).thenReturn(fooBar);
 		DavLocatorImpl result = fooBarBaz.resolveParent();
-		Assert.assertEquals(fooBar, result);
+		Assertions.assertEquals(fooBar, result);
 	}
 
 	@Test
@@ -60,18 +64,18 @@ public class DavLocatorImplTest {
 		DavLocatorImpl root = new DavLocatorImpl(factory, "http://localhost/contextPath/", "");
 		Mockito.when(factory.createResourceLocator("http://localhost/contextPath/", null, "")).thenReturn(root);
 		DavLocatorImpl result = foo.resolveParent();
-		Assert.assertEquals(root, result);
+		Assertions.assertEquals(root, result);
 	}
 
 	@Test
 	public void testResolveParent3() {
 		DavLocatorImpl root = new DavLocatorImpl(factory, "http://localhost/contextPath/", "");
-		Assert.assertNull(root.resolveParent());
+		Assertions.assertNull(root.resolveParent());
 	}
 
 	@Test
 	public void testGetFactory() {
-		Assert.assertSame(factory, locator.getFactory());
+		Assertions.assertSame(factory, locator.getFactory());
 	}
 
 }
