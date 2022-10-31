@@ -155,7 +155,7 @@ public class UnicodeResourcePathNormalizationFilterTest {
 			res.setContentLength(nfcBody.length);
 			res.getOutputStream().write(nfcBody);
 
-			MatcherAssert.assertThat(new String(nfdBody.toByteArray(), UTF_8), CoreMatchers.containsString("<href>http://example.com/u%cc%88/</href>"));
+			MatcherAssert.assertThat(nfdBody.toString(UTF_8), CoreMatchers.containsString("<href>http://example.com/u%cc%88/</href>"));
 		}
 
 	}
@@ -170,7 +170,7 @@ public class UnicodeResourcePathNormalizationFilterTest {
 			try (MultistatusHrefNormalizer transformer = new MultistatusHrefNormalizer(in, out, Form.NFD)) {
 				transformer.transform();
 			}
-			String transformed = new String(out.toByteArray(), UTF_8);
+			String transformed = out.toString(UTF_8);
 			Assertions.assertTrue(transformed.startsWith("<?xml"));
 			Assertions.assertTrue(transformed.contains("<l:foo xmlns:l=\"LOL\">"));
 			Assertions.assertTrue(transformed.contains("<l:bar>bar</l:bar>"));
@@ -185,7 +185,7 @@ public class UnicodeResourcePathNormalizationFilterTest {
 			try (MultistatusHrefNormalizer transformer = new MultistatusHrefNormalizer(in, out, Form.NFD)) {
 				transformer.transform();
 			}
-			String transformed = new String(out.toByteArray(), UTF_8);
+			String transformed = out.toString(UTF_8);
 			Assertions.assertTrue(transformed.contains("<text>\u00fc</text>"));
 			Assertions.assertTrue(transformed.contains("<href>http://example.com/u%cc%88/</href>"));
 		}
@@ -197,7 +197,7 @@ public class UnicodeResourcePathNormalizationFilterTest {
 			try (MultistatusHrefNormalizer transformer = new MultistatusHrefNormalizer(in, out, Form.NFC)) {
 				transformer.transform();
 			}
-			String transformed = new String(out.toByteArray(), UTF_8);
+			String transformed = out.toString(UTF_8);
 			Assertions.assertTrue(transformed.contains("<text>u\u0308</text>"));
 			Assertions.assertTrue(transformed.contains("<href>http://example.com/%c3%bc/</href>"));
 		}
