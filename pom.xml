@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cryptomator</groupId>
 	<artifactId>webdav-nio-adapter-servlet</artifactId>
-	<version>1.2.3</version>
+	<version>1.2.4</version>
 	<name>WebDAV-NIO Adapter Servlet</name>
 	<description>Servlet serving NIO directory contents as WebDAV resources.</description>
 	<url>https://github.com/cryptomator/webdav-nio-adapter-servlet</url>
@@ -19,13 +19,13 @@
 
 		<!-- dependencies -->
 		<servlet.version>4.0.1</servlet.version>
-		<jackrabbit.version>2.21.15</jackrabbit.version>
-		<guava.version>31.1-jre</guava.version>
-		<slf4j.version>1.7.36</slf4j.version>
+		<jackrabbit.version>2.21.19</jackrabbit.version>
+		<guava.version>32.1.2-jre</guava.version>
+		<slf4j.version>2.0.9</slf4j.version>
 
 		<!-- test dependencies -->
-		<junit.jupiter.version>5.9.0</junit.jupiter.version>
-		<mockito.version>4.7.0</mockito.version>
+		<junit.jupiter.version>5.10.0</junit.jupiter.version>
+		<mockito.version>5.5.0</mockito.version>
 		<hamcrest.version>2.2</hamcrest.version>
 	</properties>
 
@@ -120,7 +120,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.1</version>
+				<version>3.11.0</version>
 				<configuration>
 					<release>11</release>
 					<showWarnings>true</showWarnings>
@@ -128,7 +128,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M7</version>
+				<version>3.1.2</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -144,7 +144,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.3.0</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -156,7 +156,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.4.1</version>
+				<version>3.6.0</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -177,7 +177,7 @@
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>7.2.1</version>
+						<version>8.4.0</version>
 						<configuration>
 							<cveValidForHours>24</cveValidForHours>
 							<failBuildOnCVSS>6</failBuildOnCVSS>
@@ -201,7 +201,7 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.8</version>
+						<version>0.8.10</version>
 						<executions>
 							<execution>
 								<id>prepare-agent</id>
@@ -224,7 +224,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>3.0.1</version>
+						<version>3.1.0</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -259,7 +259,7 @@
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
 						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.8</version>
+						<version>1.6.13</version>
 						<extensions>true</extensions>
 						<configuration>
 							<serverId>ossrh</serverId>
