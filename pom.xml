@@ -177,7 +177,7 @@
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>8.4.3</version>
+						<version>9.0.1</version>
 						<configuration>
 							<cveValidForHours>24</cveValidForHours>
 							<failBuildOnCVSS>6</failBuildOnCVSS>
