@@ -27,6 +27,9 @@
 		<junit.jupiter.version>5.10.1</junit.jupiter.version>
 		<mockito.version>5.7.0</mockito.version>
 		<hamcrest.version>2.2</hamcrest.version>
+
+		<!-- mvn plugins -->
+		<dependency-check.version>9.0.4</dependency-check.version>
 	</properties>
 
 	<licenses>
@@ -177,10 +180,10 @@
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>8.4.3</version>
+						<version>${dependency-check.version}</version>
 						<configuration>
-							<cveValidForHours>24</cveValidForHours>
 							<failBuildOnCVSS>6</failBuildOnCVSS>
+							<nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
 						</configuration>
 						<executions>
 							<execution>
