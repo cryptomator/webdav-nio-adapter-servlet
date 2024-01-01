@@ -19,9 +19,9 @@
 
 		<!-- dependencies -->
 		<servlet.version>4.0.1</servlet.version>
-		<jackrabbit.version>2.21.20</jackrabbit.version>
-		<guava.version>32.1.3-jre</guava.version>
-		<slf4j.version>2.0.9</slf4j.version>
+		<jackrabbit.version>2.21.22</jackrabbit.version>
+		<guava.version>33.0.0-jre</guava.version>
+		<slf4j.version>2.0.10</slf4j.version>
 
 		<!-- test dependencies -->
 		<junit.jupiter.version>5.10.1</junit.jupiter.version>
