@@ -231,7 +231,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>3.2.5</version>
+						<version>3.2.7</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -240,10 +240,9 @@
 									<goal>sign</goal>
 								</goals>
 								<configuration>
-									<gpgArguments>
-										<arg>--pinentry-mode</arg>
-										<arg>loopback</arg>
-									</gpgArguments>
+									<configuration>
+										<signer>bc</signer>
+									</configuration>
 								</configuration>
 							</execution>
 						</executions>
