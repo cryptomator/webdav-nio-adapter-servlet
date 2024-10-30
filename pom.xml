@@ -248,9 +248,7 @@
 									<goal>sign</goal>
 								</goals>
 								<configuration>
-									<configuration>
-										<signer>bc</signer>
-									</configuration>
+									<signer>bc</signer>
 								</configuration>
 							</execution>
 						</executions>
