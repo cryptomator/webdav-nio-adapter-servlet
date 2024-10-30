@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cryptomator</groupId>
 	<artifactId>webdav-nio-adapter-servlet</artifactId>
-	<version>1.2.5</version>
+	<version>1.2.6</version>
 	<name>WebDAV-NIO Adapter Servlet</name>
 	<description>Servlet serving NIO directory contents as WebDAV resources.</description>
 	<url>https://github.com/cryptomator/webdav-nio-adapter-servlet</url>
@@ -19,17 +19,25 @@
 
 		<!-- dependencies -->
 		<servlet.version>4.0.1</servlet.version>
-		<jackrabbit.version>2.21.22</jackrabbit.version>
-		<guava.version>33.0.0-jre</guava.version>
-		<slf4j.version>2.0.11</slf4j.version>
+		<jackrabbit.version>2.22.0</jackrabbit.version>
+		<guava.version>33.3.0-jre</guava.version>
+		<slf4j.version>2.0.16</slf4j.version>
 
 		<!-- test dependencies -->
-		<junit.jupiter.version>5.10.1</junit.jupiter.version>
-		<mockito.version>5.10.0</mockito.version>
-		<hamcrest.version>2.2</hamcrest.version>
+		<junit.jupiter.version>5.11.0</junit.jupiter.version>
+		<mockito.version>5.13.0</mockito.version>
+		<hamcrest.version>3.0</hamcrest.version>
 
 		<!-- mvn plugins -->
-		<dependency-check.version>9.0.9</dependency-check.version>
+		<mvn-compiler.version>3.13.0</mvn-compiler.version>
+		<mvn-surefire.version>3.5.0</mvn-surefire.version>
+		<mvn-jar.version>3.4.2</mvn-jar.version>
+		<mvn-source.version>3.3.1</mvn-source.version>
+		<mvn-javadoc.version>3.10.0</mvn-javadoc.version>
+		<mvn-gpg.version>3.2.7</mvn-gpg.version>
+		<dependency-check.version>10.0.4</dependency-check.version>
+		<jacoco.version>0.8.12</jacoco.version>
+		<nexus-staging.version>1.7.0</nexus-staging.version>
 	</properties>
 
 	<licenses>
@@ -123,7 +131,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.12.1</version>
+				<version>${mvn-compiler.version}</version>
 				<configuration>
 					<release>11</release>
 					<showWarnings>true</showWarnings>
@@ -131,12 +139,12 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.2.5</version>
+				<version>${mvn-surefire.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>${mvn-jar.version}</version>
 				<configuration>
 					<archive>
 						<manifestEntries>
@@ -147,7 +155,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>${mvn-source.version}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -159,7 +167,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.6.3</version>
+				<version>${mvn-javadoc.version}</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -186,7 +194,7 @@
 							<failBuildOnCVSS>6</failBuildOnCVSS>
 							<skipTestScope>true</skipTestScope>
 							<detail>true</detail>
-							<nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+							<nvdApiKeyEnvironmentVariable>NVD_API_KEY</nvdApiKeyEnvironmentVariable>
 						</configuration>
 						<executions>
 							<execution>
@@ -208,7 +216,7 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.11</version>
+						<version>${jacoco.version}</version>
 						<executions>
 							<execution>
 								<id>prepare-agent</id>
@@ -231,7 +239,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>3.1.0</version>
+						<version>${mvn-gpg.version}</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -240,10 +248,9 @@
 									<goal>sign</goal>
 								</goals>
 								<configuration>
-									<gpgArguments>
-										<arg>--pinentry-mode</arg>
-										<arg>loopback</arg>
-									</gpgArguments>
+									<configuration>
+										<signer>bc</signer>
+									</configuration>
 								</configuration>
 							</execution>
 						</executions>
@@ -266,7 +273,7 @@
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
 						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.13</version>
+						<version>${nexus-staging.version}</version>
 						<extensions>true</extensions>
 						<configuration>
 							<serverId>ossrh</serverId>
