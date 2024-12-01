@@ -30,12 +30,12 @@
 
 		<!-- mvn plugins -->
 		<mvn-compiler.version>3.13.0</mvn-compiler.version>
-		<mvn-surefire.version>3.5.0</mvn-surefire.version>
+		<mvn-surefire.version>3.5.2</mvn-surefire.version>
 		<mvn-jar.version>3.4.2</mvn-jar.version>
 		<mvn-source.version>3.3.1</mvn-source.version>
-		<mvn-javadoc.version>3.10.0</mvn-javadoc.version>
+		<mvn-javadoc.version>3.11.1</mvn-javadoc.version>
 		<mvn-gpg.version>3.2.7</mvn-gpg.version>
-		<dependency-check.version>10.0.4</dependency-check.version>
+		<dependency-check.version>11.1.0</dependency-check.version>
 		<jacoco.version>0.8.12</jacoco.version>
 		<nexus-staging.version>1.7.0</nexus-staging.version>
 	</properties>
