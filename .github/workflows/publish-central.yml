@@ -15,12 +15,12 @@ jobs:
           java-version: 21
           distribution: 'temurin'
           cache: 'maven'
-          server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
-          server-username: MAVEN_USERNAME # env variable for username in deploy
-          server-password: MAVEN_PASSWORD # env variable for token in deploy
+          server-id: central
+          server-username: MAVEN_CENTRAL_USERNAME
+          server-password: MAVEN_CENTRAL_PASSWORD
       - name: Verify project version = ${{ github.event.release.tag_name }}
         run: |
-            PROJECT_VERSION=$(./mvnw help:evaluate "-Dexpression=project.version" -q -DforceStdout)
+            PROJECT_VERSION=$(mvn help:evaluate "-Dexpression=project.version" -q -DforceStdout)
             test "$PROJECT_VERSION" = "${{ github.event.release.tag_name }}"
       - name: Deploy
         run: mvn deploy -B -DskipTests -Psign,deploy-central --no-transfer-progress
