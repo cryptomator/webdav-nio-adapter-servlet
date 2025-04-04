@@ -240,7 +240,13 @@ class DavFolder extends DavNode {
 
 	@Override
 	public DavProperty<?> getProperty(DavPropertyName name) {
+		var osName = System.getProperty("os.name").toLowerCase();
+		var osVersion = System.getProperty("os.version");
 		if (PROPERTY_QUOTA_AVAILABLE.equals(name)) {
+			if (osName.contains("mac") && osVersion.startsWith("15.4")) {
+				// macOS 15.4 has a bug that causes the file system to mount with a 90s delay
+				return null;
+			}
 			try {
 				long availableBytes = Files.getFileStore(path).getUsableSpace();
 				return new DefaultDavProperty<Long>(name, availableBytes);
@@ -248,6 +254,10 @@ class DavFolder extends DavNode {
 				return null;
 			}
 		} else if (PROPERTY_QUOTA_USED.equals(name)) {
+			if (osName.contains("mac") && osVersion.startsWith("15.4")) {
+				// macOS 15.4 has a bug that causes the file system to mount with a 90s delay
+				return null;
+			}
 			try {
 				long availableBytes = Files.getFileStore(path).getTotalSpace();
 				long freeBytes = Files.getFileStore(path).getUsableSpace();
