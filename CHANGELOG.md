@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 The changelog starts with version 1.2.10.
 Changes to prior versions can be found on the [Github release page](https://github.com/cryptomator/webdav-nio-adapter-servlet/releases).
 
+## [Unreleased]
+
+No changes
+
 ## [1.2.10] - 2025-09-08
 
 ### Changed
