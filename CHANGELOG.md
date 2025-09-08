@@ -14,6 +14,10 @@ No changes
 
 ## [1.2.10] - 2025-09-08
 
+## Added
+
+* File CHANGELOG.md to keep track of changes for non-project users
+
 ### Changed
 
 * Updated `org.apache.jackrabbit:jackrabbit-webdav` from version 2.22.0 to 2.22.2
