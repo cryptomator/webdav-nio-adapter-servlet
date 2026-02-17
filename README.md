@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/cryptomator/webdav-nio-adapter-servlet/workflows/Build/badge.svg)](https://github.com/cryptomator/webdav-nio-adapter-servlet/actions?query=workflow%3ABuild)
+[![Build Status](https://github.com/cryptomator/webdav-nio-adapter-servlet/workflows/Build/badge.svg)](https://github.com/cryptomator/webdav-nio-adapter-servlet/actions?query=workflow%3ABuild+branch%3Adevelop)
 [![Maven Central](https://img.shields.io/maven-central/v/org.cryptomator/webdav-nio-adapter-servlet.svg?maxAge=86400)](https://repo1.maven.org/maven2/org/cryptomator/webdav-nio-adapter-servlet/)
 [![Javadocs](http://www.javadoc.io/badge/org.cryptomator/webdav-nio-adapter-servlet.svg)](http://www.javadoc.io/doc/org.cryptomator/webdav-nio-adapter-servlet)
 
