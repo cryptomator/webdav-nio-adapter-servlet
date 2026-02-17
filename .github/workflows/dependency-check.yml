@@ -13,7 +13,7 @@ jobs:
   check-dependencies:
     uses: skymatic/workflows/.github/workflows/run-dependency-check.yml@957d3c2c08c56855fdac41e5afb9a7aca8c30dd9 # v3.0.3
     with:
-      java-version: 21
+      java-version: 25
     secrets:
       nvd-api-key: ${{ secrets.NVD_API_KEY }}
       ossindex-username: ${{ secrets.OSSINDEX_USERNAME }}
