@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 The changelog starts with version 1.2.10.
 Changes to prior versions can be found on the [Github release page](https://github.com/cryptomator/webdav-nio-adapter-servlet/releases).
 
-## [Unreleased]
+## [1.2.11] - 2026-02-17
 
 ### Changed
 * Pin CI actions ([#96](https://github.com/cryptomator/webdav-nio-adapter-servlet/pull/96))
