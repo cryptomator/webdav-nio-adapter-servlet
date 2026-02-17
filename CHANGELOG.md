@@ -9,15 +9,18 @@ Changes to prior versions can be found on the [Github release page](https://gith
 
 ## [Unreleased]
 
-No changes
+### Changed
+* Pin CI actions ([#96](https://github.com/cryptomator/webdav-nio-adapter-servlet/pull/96))
+* Updated dependencies:
+    * `org.apache.jackrabbit:jackrabbit-webdav` from version 2.22.2 to 2.22.3
+    * `com.google.guava:guava` from version 33.4.8-jre to 33.5.0-jre
+
 
 ## [1.2.10] - 2025-09-08
 
-## Added
-
+### Added
 * File CHANGELOG.md to keep track of changes for non-project users
 
 ### Changed
-
 * Updated `org.apache.jackrabbit:jackrabbit-webdav` from version 2.22.0 to 2.22.2
 * Updated `com.google.guava:guava` from version 33.4.0-jre to 33.4.8-jre
