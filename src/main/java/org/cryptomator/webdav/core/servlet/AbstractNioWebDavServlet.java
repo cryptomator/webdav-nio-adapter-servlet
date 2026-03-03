@@ -17,11 +17,13 @@ import org.apache.jackrabbit.webdav.lock.ActiveLock;
 import org.apache.jackrabbit.webdav.lock.Scope;
 import org.apache.jackrabbit.webdav.lock.Type;
 import org.apache.jackrabbit.webdav.server.AbstractWebdavServlet;
+import org.cryptomator.webdav.core.filters.LoggingFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.Set;
 
@@ -96,12 +98,21 @@ public abstract class AbstractNioWebDavServlet extends AbstractWebdavServlet {
 			} catch (UncheckedDavException e) {
 				throw e.toDavException();
 			}
+		} catch (IOException | UncheckedIOException e) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("REQUEST {}: Returning 500 due to IO exception.", request.getAttribute(LoggingFilter.REQUEST_ID_ATTR_NAME), e);
+			} else {
+				LOG.warn("{} request failed, returning 500. Reason: {}", DavMethodsUtil.getName(method), e.getClass().getName());
+			}
+			response.sendError(DavServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
 		} catch (DavException e) {
 			if (e.getErrorCode() == DavServletResponse.SC_INTERNAL_SERVER_ERROR) {
 				LOG.error("Unexpected DavException.", e);
 			}
+			LOG.debug("REQUEST {}: Returning {} due to exception.", request.getAttribute(LoggingFilter.REQUEST_ID_ATTR_NAME), e.getErrorCode(), e);
 			throw e;
 		}
+		return true;
 	}
 
 	/* GET stuff */
