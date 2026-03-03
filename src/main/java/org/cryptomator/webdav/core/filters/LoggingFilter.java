@@ -19,6 +19,9 @@ import java.util.concurrent.atomic.AtomicLong;
 public class LoggingFilter implements HttpFilter {
 
 	private static final Logger LOG = LoggerFactory.getLogger(LoggingFilter.class);
+
+	public static final String REQUEST_ID_ATTR_NAME = "org.cryptomator.requestId";
+
 	private final AtomicLong REQUEST_ID_GEN = new AtomicLong();
 
 	@Override
@@ -26,6 +29,7 @@ public class LoggingFilter implements HttpFilter {
 		if (LOG.isDebugEnabled()) {
 			long requestId = REQUEST_ID_GEN.getAndIncrement();
 			LOG.debug("REQUEST {}:\n{} {} {}\n{}", requestId, request.getMethod(), request.getRequestURI(), request.getProtocol(), headers(request));
+			request.setAttribute(REQUEST_ID_ATTR_NAME, requestId);
 			chain.doFilter(request, response);
 			LOG.debug("RESPONSE {}:\n{}\n{}", requestId, response.getStatus(), headers(response));
 		} else {

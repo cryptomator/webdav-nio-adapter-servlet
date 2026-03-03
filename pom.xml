@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cryptomator</groupId>
 	<artifactId>webdav-nio-adapter-servlet</artifactId>
-	<version>1.2.11</version>
+	<version>1.2.12</version>
 	<name>WebDAV-NIO Adapter Servlet</name>
 	<description>Servlet serving NIO directory contents as WebDAV resources.</description>
 	<url>https://github.com/cryptomator/webdav-nio-adapter-servlet</url>
@@ -24,13 +24,13 @@
 		<slf4j.version>2.0.17</slf4j.version>
 
 		<!-- test dependencies -->
-		<junit.jupiter.version>6.0.2</junit.jupiter.version>
-		<mockito.version>5.21.0</mockito.version>
+		<junit.jupiter.version>6.0.3</junit.jupiter.version>
+		<mockito.version>5.22.0</mockito.version>
 		<hamcrest.version>3.0</hamcrest.version>
 
 		<!-- mvn plugins -->
-		<mvn-compiler.version>3.14.1</mvn-compiler.version>
-		<mvn-surefire.version>3.5.4</mvn-surefire.version>
+		<mvn-compiler.version>3.15.0</mvn-compiler.version>
+		<mvn-surefire.version>3.5.5</mvn-surefire.version>
 		<mvn-jar.version>3.5.0</mvn-jar.version>
 		<mvn-source.version>3.4.0</mvn-source.version>
 		<mvn-javadoc.version>3.12.0</mvn-javadoc.version>
