@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.cryptomator.webdav.core.servlet;
 
-import com.google.common.collect.ImmutableSet;
 import org.apache.jackrabbit.webdav.*;
 import org.apache.jackrabbit.webdav.lock.LockManager;
 
@@ -22,6 +21,7 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 class DavResourceFactoryImpl implements DavResourceFactory {
@@ -98,7 +98,7 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 
 	private DavResource createDestinationResource(DavLocatorImpl locator, DavServletRequest request, DavServletResponse response) throws DavException {
 		assert locator.equals(request.getDestinationLocator());
-		assert ImmutableSet.of(DavMethods.METHOD_MOVE, DavMethods.METHOD_COPY).contains(request.getMethod());
+		assert Set.of(DavMethods.METHOD_MOVE, DavMethods.METHOD_COPY).contains(request.getMethod());
 		Path srcP = resolveUrl(request.getRequestLocator().getResourcePath());
 		Path dstP = resolveUrl(locator.getResourcePath());
 		Optional<BasicFileAttributes> srcAttr = readBasicFileAttributes(srcP);

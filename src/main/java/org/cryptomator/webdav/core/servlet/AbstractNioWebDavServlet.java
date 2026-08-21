@@ -9,7 +9,6 @@
 package org.cryptomator.webdav.core.servlet;
 
 import com.google.common.base.Predicates;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterators;
 import org.apache.jackrabbit.webdav.*;
 import org.apache.jackrabbit.webdav.header.IfHeader;
@@ -21,7 +20,7 @@ import org.cryptomator.webdav.core.filters.LoggingFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
@@ -167,7 +166,7 @@ public abstract class AbstractNioWebDavServlet extends AbstractWebdavServlet {
 	private boolean hasCorrectLockTokens(DavSession session, DavResource resource) {
 		boolean access = false;
 
-		final Set<String> providedLockTokens = ImmutableSet.copyOf(session.getLockTokens());
+		final Set<String> providedLockTokens = Set.of(session.getLockTokens());
 		for (ActiveLock lock : resource.getLocks()) {
 			access |= providedLockTokens.contains(lock.getToken());
 		}

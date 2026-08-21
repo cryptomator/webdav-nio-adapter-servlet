@@ -5,20 +5,19 @@
  *******************************************************************************/
 package org.cryptomator.webdav.core.filters;
 
-import com.google.common.collect.ImmutableSet;
 import org.apache.jackrabbit.webdav.DavServletResponse;
 import org.apache.jackrabbit.webdav.util.EncodeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 import javax.xml.namespace.QName;
 import javax.xml.stream.*;
 import java.io.*;
@@ -38,7 +37,7 @@ public class UnicodeResourcePathNormalizationFilter implements HttpFilter {
 	private static final Logger LOG = LoggerFactory.getLogger(UnicodeResourcePathNormalizationFilter.class);
 	private static final String PROPFIND_METHOD = "PROPFIND";
 	private static final String USER_AGENT_HEADER = "User-Agent";
-	private static final Set<String> USER_AGENTS_EXPECTING_NFD = ImmutableSet.of("WebDAVFS");
+	private static final Set<String> USER_AGENTS_EXPECTING_NFD = Set.of("WebDAVFS");
 
 	@Override
 	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
