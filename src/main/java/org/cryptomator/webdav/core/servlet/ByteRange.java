@@ -58,7 +58,7 @@ class ByteRange {
 		}
 		List<String> byteRanges = Splitter.on(RANGE_SET_SEP).omitEmptyStrings().splitToList(byteRangeSet);
 		if (byteRanges.size() == 1) {
-			return byteRanges.get(0);
+			return byteRanges.getFirst();
 		} else {
 			throw new UnsupportedRangeException(); // only a single range is expected
 		}
@@ -70,7 +70,7 @@ class ByteRange {
 			throw new MalformedByteRangeException();
 		}
 		try {
-			Long first = bytePos.get(0).isEmpty() ? null : Long.valueOf(bytePos.get(0));
+			Long first = bytePos.getFirst().isEmpty() ? null : Long.valueOf(bytePos.getFirst());
 			Long last = bytePos.get(1).isEmpty() ? null : Long.valueOf(bytePos.get(1));
 			return new ByteRange(first, last);
 		} catch (NumberFormatException e) {

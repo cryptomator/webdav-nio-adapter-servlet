@@ -2,7 +2,6 @@ package org.cryptomator.webdav.core.servlet;
 
 import javax.servlet.ServletException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class NioWebDavServlet extends AbstractNioWebDavServlet {
 
@@ -12,7 +11,7 @@ public class NioWebDavServlet extends AbstractNioWebDavServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		rootPath = Paths.get(getInitParameter(INIT_PARAM_ROOT_PATH));
+		rootPath = Path.of(getInitParameter(INIT_PARAM_ROOT_PATH));
 	}
 
 	@Override

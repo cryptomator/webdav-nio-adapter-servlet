@@ -46,10 +46,10 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 
 	@Override
 	public DavResource createResource(DavResourceLocator locator, DavServletRequest request, DavServletResponse response) throws DavException {
-		if (locator instanceof DavLocatorImpl && locator.equals(request.getRequestLocator())) {
-			return createRequestResource((DavLocatorImpl) locator, request, response);
-		} else if (locator instanceof DavLocatorImpl && locator.equals(request.getDestinationLocator())) {
-			return createDestinationResource((DavLocatorImpl) locator, request, response);
+		if (locator instanceof DavLocatorImpl impl1 && locator.equals(request.getRequestLocator())) {
+			return createRequestResource(impl1, request, response);
+		} else if (locator instanceof DavLocatorImpl impl && locator.equals(request.getDestinationLocator())) {
+			return createDestinationResource(impl, request, response);
 		} else {
 			throw new IllegalArgumentException("Unsupported locator of type " + locator.getClass());
 		}
@@ -65,12 +65,12 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 		} else if (DavMethods.METHOD_MKCOL.equals(request.getMethod())) {
 			checkPreconditionsForMkcol(p, attr);
 			return createFolder(locator, p, Optional.empty(), request.getDavSession());
-		} else if (!attr.isPresent() && DavMethods.METHOD_LOCK.equals(request.getMethod())) {
+		} else if (attr.isEmpty() && DavMethods.METHOD_LOCK.equals(request.getMethod())) {
 			// locking non-existing resources must create a non-collection resource:
 			// https://tools.ietf.org/html/rfc4918#section-9.10.4
 			// See also: DavFile#lock(...)
 			return createFile(locator, p, Optional.empty(), request.getDavSession());
-		} else if (!attr.isPresent()) {
+		} else if (attr.isEmpty()) {
 			throw new DavException(DavServletResponse.SC_NOT_FOUND);
 		} else if (attr.get().isDirectory()) {
 			return createFolder(locator, p, attr, request.getDavSession());
@@ -103,7 +103,7 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 		Path dstP = resolveUrl(locator.getResourcePath());
 		Optional<BasicFileAttributes> srcAttr = readBasicFileAttributes(srcP);
 		Optional<BasicFileAttributes> dstAttr = readBasicFileAttributes(dstP);
-		if (!srcAttr.isPresent()) {
+		if (srcAttr.isEmpty()) {
 			throw new DavException(DavServletResponse.SC_NOT_FOUND);
 		} else if (srcAttr.get().isDirectory()) {
 			return createFolder(locator, dstP, dstAttr, request.getDavSession());
@@ -114,8 +114,8 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 
 	@Override
 	public DavResource createResource(DavResourceLocator locator, DavSession session) throws DavException {
-		if (locator instanceof DavLocatorImpl) {
-			return createResourceInternal((DavLocatorImpl) locator, session);
+		if (locator instanceof DavLocatorImpl impl) {
+			return createResourceInternal(impl, session);
 		} else {
 			throw new IllegalArgumentException("Unsupported locator of type " + locator.getClass());
 		}
@@ -124,7 +124,7 @@ class DavResourceFactoryImpl implements DavResourceFactory {
 	private DavResource createResourceInternal(DavLocatorImpl locator, DavSession session) throws DavException {
 		Path p = resolveUrl(locator.getResourcePath());
 		Optional<BasicFileAttributes> attr = readBasicFileAttributes(p);
-		if (!attr.isPresent()) {
+		if (attr.isEmpty()) {
 			throw new DavException(DavServletResponse.SC_NOT_FOUND);
 		} else if (attr.get().isDirectory()) {
 			return createFolder(locator, p, attr, session);

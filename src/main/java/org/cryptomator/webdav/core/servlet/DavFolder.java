@@ -63,13 +63,13 @@ class DavFolder extends DavNode {
 
 	@Override
 	public void addMember(DavResource resource, InputContext inputContext) throws DavException {
-		if (resource instanceof DavFolder) {
-			addMemberFolder((DavFolder) resource);
-		} else if (resource instanceof DavFile) {
-			assert inputContext.hasStream();
-			addMemberFile((DavFile) resource, inputContext.getInputStream());
-		} else {
-			throw new IllegalArgumentException("Unsupported resource type: " + resource.getClass().getName());
+		switch (resource) {
+			case DavFolder folder -> addMemberFolder(folder);
+			case DavFile file -> {
+				assert inputContext.hasStream();
+				addMemberFile(file, inputContext.getInputStream());
+			}
+			case null, default -> throw new IllegalArgumentException("Unsupported resource type: " + resource.getClass().getName());
 		}
 	}
 
@@ -136,8 +136,8 @@ class DavFolder extends DavNode {
 		for (ActiveLock lock : member.getLocks()) {
 			member.unlock(lock.getToken());
 		}
-		if (member instanceof DavNode) {
-			removeMemberInternal((DavNode) member);
+		if (member instanceof DavNode node) {
+			removeMemberInternal(node);
 		}
 	}
 
@@ -156,8 +156,8 @@ class DavFolder extends DavNode {
 	public void move(DavResource destination) throws DavException {
 		if (!exists()) {
 			throw new DavException(DavServletResponse.SC_NOT_FOUND);
-		} else if (destination instanceof DavNode) {
-			this.moveInternal((DavNode) destination);
+		} else if (destination instanceof DavNode node) {
+			this.moveInternal(node);
 		} else {
 			throw new IllegalArgumentException("Destination not a DavFolder: " + destination.getClass().getName());
 		}
@@ -189,8 +189,8 @@ class DavFolder extends DavNode {
 	public void copy(DavResource destination, boolean shallow) throws DavException {
 		if (!exists()) {
 			throw new DavException(DavServletResponse.SC_NOT_FOUND);
-		} else if (destination instanceof DavNode) {
-			copyInternal((DavNode) destination, shallow);
+		} else if (destination instanceof DavNode node) {
+			copyInternal(node, shallow);
 		} else {
 			throw new IllegalArgumentException("Destination not a DavNode: " + destination.getClass().getName());
 		}

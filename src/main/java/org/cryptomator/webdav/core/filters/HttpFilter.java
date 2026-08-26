@@ -17,8 +17,8 @@ interface HttpFilter extends Filter {
 
 	@Override
 	default void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
-			doFilterHttp((HttpServletRequest) request, (HttpServletResponse) response, chain);
+		if (request instanceof HttpServletRequest servletRequest && response instanceof HttpServletResponse servletResponse) {
+			doFilterHttp(servletRequest, servletResponse, chain);
 		} else {
 			chain.doFilter(request, response);
 		}

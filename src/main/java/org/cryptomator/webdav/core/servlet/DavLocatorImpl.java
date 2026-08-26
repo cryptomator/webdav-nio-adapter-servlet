@@ -131,8 +131,7 @@ class DavLocatorImpl implements DavResourceLocator {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DavLocatorImpl) {
-			DavLocatorImpl other = (DavLocatorImpl) obj;
+		if (obj instanceof DavLocatorImpl other) {
 			assert this.factory != null //
 					&& this.prefix != null //
 					&& this.resourcePath != null;
