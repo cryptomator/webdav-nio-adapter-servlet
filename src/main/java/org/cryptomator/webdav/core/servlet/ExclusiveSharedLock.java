@@ -98,8 +98,7 @@ class ExclusiveSharedLock extends AbstractActiveLock {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ExclusiveSharedLock) {
-			ExclusiveSharedLock other = (ExclusiveSharedLock) obj;
+		if (obj instanceof ExclusiveSharedLock other) {
 			return this.getToken().equals(other.getToken());
 		} else {
 			return false;

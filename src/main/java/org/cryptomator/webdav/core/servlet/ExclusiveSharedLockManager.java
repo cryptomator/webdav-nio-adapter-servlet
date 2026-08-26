@@ -24,8 +24,8 @@ class ExclusiveSharedLockManager implements LockManager {
 	public ActiveLock createLock(LockInfo lockInfo, DavResource resource) throws DavException {
 		Objects.requireNonNull(lockInfo);
 		Objects.requireNonNull(resource);
-		if (resource instanceof DavNode) {
-			return createLockInternal(lockInfo, (DavNode) resource);
+		if (resource instanceof DavNode node) {
+			return createLockInternal(lockInfo, node);
 		} else {
 			throw new IllegalArgumentException("Unsupported resource type " + resource.getClass());
 		}
@@ -96,9 +96,9 @@ class ExclusiveSharedLockManager implements LockManager {
 
 	@Override
 	public synchronized void releaseLock(String lockToken, DavResource resource) throws DavException {
-		if (resource instanceof DavNode) {
+		if (resource instanceof DavNode node) {
 			try {
-				releaseLockInternal(lockToken, (DavNode) resource);
+				releaseLockInternal(lockToken, node);
 			} catch (UncheckedDavException e) {
 				throw e.toDavException();
 			}
@@ -123,8 +123,7 @@ class ExclusiveSharedLockManager implements LockManager {
 
 	@Override
 	public ActiveLock getLock(Type type, Scope scope, DavResource resource) {
-		if (resource instanceof DavNode) {
-			DavNode node = (DavNode) resource;
+		if (resource instanceof DavNode node) {
 			return getLockInternal(type, scope, node.getLocator(), 0);
 		} else {
 			throw new IllegalArgumentException("Unsupported resource type " + resource.getClass());
@@ -150,8 +149,7 @@ class ExclusiveSharedLockManager implements LockManager {
 
 	@Override
 	public boolean hasLock(String lockToken, DavResource resource) {
-		if (resource instanceof DavNode) {
-			DavNode node = (DavNode) resource;
+		if (resource instanceof DavNode node) {
 			return lockedResources.getOrDefault(node.getLocator(), Collections.emptyMap()).containsKey(lockToken);
 		} else {
 			throw new IllegalArgumentException("Unsupported resource type " + resource.getClass());
