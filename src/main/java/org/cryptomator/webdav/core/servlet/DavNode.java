@@ -183,12 +183,10 @@ abstract class DavNode implements DavResource {
 	public MultiStatusResponse alterProperties(List<? extends PropEntry> changeList) throws DavException {
 		final DavPropertyNameSet names = new DavPropertyNameSet();
 		for (final PropEntry entry : changeList) {
-			if (entry instanceof DavProperty) {
-				final DavProperty<?> prop = (DavProperty<?>) entry;
+			if (entry instanceof DavProperty<?> prop) {
 				this.setProperty(prop);
 				names.add(prop.getName());
-			} else if (entry instanceof DavPropertyName) {
-				final DavPropertyName name = (DavPropertyName) entry;
+			} else if (entry instanceof DavPropertyName name) {
 				this.removeProperty(name);
 				names.add(name);
 			}

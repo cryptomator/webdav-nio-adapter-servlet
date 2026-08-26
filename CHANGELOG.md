@@ -10,7 +10,8 @@ Changes to prior versions can be found on the [Github release page](https://gith
 
 ## [Unreleased](https://github.com/cryptomator/webdav-nio-adapter-servlet/compare/1.2.12...HEAD)
 
-No changes yet.
+### Changed
+* **[BREAKING]** Update release target to JDK 25
 
 
 ## [1.2.12] - 2026-03-03
