@@ -24,7 +24,9 @@ import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class AbstractNioWebDavServlet extends AbstractWebdavServlet {
 
@@ -166,7 +168,7 @@ public abstract class AbstractNioWebDavServlet extends AbstractWebdavServlet {
 	private boolean hasCorrectLockTokens(DavSession session, DavResource resource) {
 		boolean access = false;
 
-		final Set<String> providedLockTokens = Set.of(session.getLockTokens());
+		final Set<String> providedLockTokens = Arrays.stream(session.getLockTokens()).collect(Collectors.toSet());
 		for (ActiveLock lock : resource.getLocks()) {
 			access |= providedLockTokens.contains(lock.getToken());
 		}
