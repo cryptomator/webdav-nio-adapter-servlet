@@ -21,6 +21,8 @@
 		<!-- dependencies -->
 		<servlet.version>6.0.0</servlet.version>
 		<jackrabbit.version>2.22.4-SNAPSHOT</jackrabbit.version>
+		<httpclient.version>4.5.14</httpclient.version>
+		<httpcore.version>4.4.16</httpcore.version>
 		<guava.version>33.6.0-jre</guava.version>
 		<slf4j.version>2.0.18</slf4j.version>
 
@@ -81,11 +83,32 @@
 					<artifactId>httpclient</artifactId>
 				</exclusion>
 				<exclusion>
+					<!-- same as httpclient: only reachable from the unused client-side classes -->
+					<groupId>org.apache.httpcomponents</groupId>
+					<artifactId>httpcore</artifactId>
+				</exclusion>
+				<exclusion>
 					<!-- not required, because commons logging is only used by excluded httpclient -->
 					<groupId>org.slf4j</groupId>
 					<artifactId>jcl-over-slf4j</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<!-- org.apache.jackrabbit.webdav requires the httpcomponents modules as `transitive static`,
+		 so the runtime module graph resolves without them (see exclusions above). Maven dependency is still mandatory
+		 for compilation: provided scope puts the modules on the module path without resolution and without leaking them into
+		 maven dependencies. -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>${httpcore.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Guava -->
@@ -152,13 +175,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>${mvn-jar.version}</version>
-				<configuration>
-					<archive>
-						<manifestEntries>
-							<Automatic-Module-Name>org.cryptomator.frontend.webdav.servlet</Automatic-Module-Name>
-						</manifestEntries>
-					</archive>
-				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
@@ -318,7 +334,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-</repositories>
+	</repositories>
 
 
 </project>
