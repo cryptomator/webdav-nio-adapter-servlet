@@ -1,6 +1,6 @@
 package org.cryptomator.webdav.core.servlet;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import java.nio.file.Path;
 
 public class NioWebDavServlet extends AbstractNioWebDavServlet {
