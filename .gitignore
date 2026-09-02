@@ -19,3 +19,6 @@ pom.xml.versionsBackup
 .idea/compiler.xml
 .idea/jarRepositories.xml
 *.iml
+
+#VS Code
+.vscode/**
