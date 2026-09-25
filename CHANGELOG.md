@@ -8,10 +8,18 @@ The changelog starts with version 1.2.10.
 Changes to prior versions can be found on the [Github release page](https://github.com/cryptomator/webdav-nio-adapter-servlet/releases).
 
 
-## [Unreleased](https://github.com/cryptomator/webdav-nio-adapter-servlet/compare/1.2.12...HEAD)
+## [Unreleased](https://github.com/cryptomator/webdav-nio-adapter-servlet/compare/1.2.13...HEAD)
 
 ### Changed
 * **[BREAKING]** Update release target to JDK 25
+
+
+## [1.2.13] - 2026-09-25
+
+### Changed
+* Updated dependencies:
+    * `org.apache.jackrabbit:jackrabbit-webdav` from version 2.22.3 to 2.22.4
+    * `org.slf4j:slf4j-api` from version 2.0.17 to 2.0.20
 
 
 ## [1.2.12] - 2026-03-03
