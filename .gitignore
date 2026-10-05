@@ -21,4 +21,4 @@ pom.xml.versionsBackup
 *.iml
 
 #VS Code
-.vscode/**
+.vscode/
