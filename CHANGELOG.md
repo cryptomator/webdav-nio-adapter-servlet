@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 The changelog starts with version 1.2.10.
 Changes to prior versions can be found on the [Github release page](https://github.com/cryptomator/webdav-nio-adapter-servlet/releases).
 
+## [1.2.14] - 2026-10-08
+
+### Changed
+* Updated dependencies:
+    * `org.apache.jackrabbit:jackrabbit-webdav` from version 2.22.4 to 2.22.5
+
+
 ## [1.2.13] - 2026-09-25
 
 ### Changed
