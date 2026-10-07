@@ -14,6 +14,11 @@ Changes to prior versions can be found on the [Github release page](https://gith
 * **[BREAKING]** Update release target to JDK 25
 
 
+## [1.2.15] - 2026-10-08
+
+Rerelease of 1.2.14. No user facing changes.
+
+
 ## [1.2.14] - 2026-10-08
 
 ### Changed
