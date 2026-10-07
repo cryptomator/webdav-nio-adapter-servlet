@@ -2,6 +2,9 @@ name: Publish to GitHub Packages
 on:
   release:
     types: [published]
+permissions:
+  contents: read # Required for checkout
+  packages: write # Required for the deploy to GitHub Packages step
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -14,9 +17,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - name: Enforce project version ${{ github.event.release.tag_name }}
-        run: mvn versions:set -B -DnewVersion=${{ github.event.release.tag_name }}
+        run: ./mvnw versions:set -B -DnewVersion=${{ github.event.release.tag_name }}
       - name: Deploy
-        run: mvn deploy -B -DskipTests -Psign,deploy-github --no-transfer-progress
+        run: ./mvnw deploy -B -DskipTests -Psign,deploy-github --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
