@@ -14,6 +14,13 @@ Changes to prior versions can be found on the [Github release page](https://gith
 * **[BREAKING]** Update release target to JDK 25
 
 
+## [1.2.14] - 2026-10-08
+
+### Changed
+* Updated dependencies:
+    * `org.apache.jackrabbit:jackrabbit-webdav` from version 2.22.4 to 2.22.5
+
+
 ## [1.2.13] - 2026-09-25
 
 ### Changed
