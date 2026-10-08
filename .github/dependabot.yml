@@ -4,6 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    ignore:
+      - dependency-name: "org.apache.maven:apache-maven"
+        versions: ["[3.10.0,)"]
     groups:
       maven-dependencies:
         patterns:
